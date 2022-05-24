@@ -1,24 +1,23 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"net"
-	
 )
 
-
-
 func main() {
-	
-	ln, err := net.Listen("tcp", "localhost:8080")
 
-	if err != nil {
-		return
-	}
+	fmt.Println("Starting server...")
+
+	ln, _ := net.Listen("tcp", "localhost:8080")
+
+	fmt.Println("Server started! Waiting for connection")
+
+	conn, _ := ln.Accept()
 
 	for {
-	conn, err := ln.Accept()
-	if err != nil{
-		return
-	}
+		message, _ := bufio.NewReader(conn).ReadString('\n')
+		fmt.Print("Message Received: ", string(message))
 	}
 }
